@@ -1,4 +1,4 @@
-$folder = 'D:\School\BackupsBalu\bakcups'
+$folder = 'D:\School\BackupsBalu\backups'
 $filter = '*.*'
 
 $fsw = New-Object IO.FileSystemWatcher $folder, $filter -Property @{
