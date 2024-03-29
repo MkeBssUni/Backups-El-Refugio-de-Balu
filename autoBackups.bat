@@ -13,11 +13,11 @@ Register-ObjectEvent $fsw Created -SourceIdentifier FileCreated -Action {
     $timeStamp = $Event.TimeGenerated
     Write-Host "File $name was $changeType at $timeStamp"
     
-    # ejecutar un git add .
-    # ejecutar un git commit -m "mensaje"
-    # ejecutar un git push
+    $fecha = Get-Date -Format "yyyy-MM-dd_HH_mm"
+    $nombreArchivo = "D:\School\BackupsBalu\backups\backup_" + $fecha + ".sql"
+    docker exec -i ecc3338f9726 mysqldump -u balu -ps2nd0b4lu refugio_balu > $nombreArchivo
 
     git add .
-    git commit -m "Auto backup"
+    git commit -m "Backup $fecha"
     git push
 }
