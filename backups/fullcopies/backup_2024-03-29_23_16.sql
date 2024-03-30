@@ -1,4 +1,3 @@
-failed to get console mode for stdout: The handle is invalid.
 -- MySQL dump 10.13  Distrib 8.0.36, for Linux (x86_64)
 --
 -- Host: localhost    Database: refugio_balu
