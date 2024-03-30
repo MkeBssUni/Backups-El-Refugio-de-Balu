@@ -1,10 +1,10 @@
 @echo off
 
-:: Log file
+:: Log file to store the output of the script if needed
 :: set logFile=D:\School\BackupsBalu\backups\backup_log.txt
 :: Ensure the Docker container is running before executing the dump
 docker start ecc3338f9726
-
+:: Wait for the container to start
 timeout /t 120 /nobreak
 
 for /f "tokens=2 delims==" %%i in ('wmic OS Get localdatetime /value') do set fecha=%%i
