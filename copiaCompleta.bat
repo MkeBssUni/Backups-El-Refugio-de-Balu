@@ -1,3 +1,4 @@
+:: Script to backup a MySQL database running in a Docker container
 @echo off
 
 :: Variables
@@ -20,7 +21,6 @@ set fecha=%fecha:~0,4%-%fecha:~4,2%-%fecha:~6,2%_%fecha:~8,2%_%fecha:~10,2%
 set nombreArchivo=D:\School\BackupsBalu\backups\fullcopies\backup_%fecha%.sql
 
 :: Dump the database and redirect stderr to stdout
-:: docker exec %containerId% mysqldump -u %user% -p%password% %dbName% > "%nombreArchivo%" 2>&1
 docker exec %containerId% mysqldump -u %user% -p%password% %dbName% > "%nombreArchivo%" 2>nul
 
 

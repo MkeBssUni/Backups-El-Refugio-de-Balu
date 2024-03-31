@@ -1,17 +1,21 @@
+:: Script for restoring the most recent full copy of a MySQL database from a .sql file
 @echo off
 
-set containerId=72410bca8cce
+:: Variables
+set containerId=72410bca8cce 
 set user=balu
 set password=s2nd0b4lu
 
-set backupFolder=D:\School\BackupsBalu\backups\fullcopies
 set dbName=refugio_balu
+set repositoryFolder=D:\School\BackupsBalu\backups
+set backupFolder=%repositoryFolder%\fullcopies
 
+:: Start the MySQL container
 docker start %containerId%
 :: Wait for the container to start
-::timeout /t 120 /nobreak
+timeout /t 120 /nobreak
 
-cd /d D:\School\BackupsBalu\backups\
+cd /d %repositoryFolder%
 
 git pull
 
