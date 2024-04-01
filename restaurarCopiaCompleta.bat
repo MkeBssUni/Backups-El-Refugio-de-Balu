@@ -7,7 +7,8 @@ set user=balu
 set password=s2nd0b4lu
 
 set dbName=refugio_balu
-set repositoryFolder=D:\School\BackupsBalu\backups
+set repositoryFolder= D:\School\BackupsBalu\backups
+:: donde busca
 set backupFolder=%repositoryFolder%\fullcopies
 
 :: Start the MySQL container
@@ -41,5 +42,3 @@ if defined newestBackup (
 ) else (
     echo No se encontraron archivos .sql en la carpeta especificada.
 )
-
-timeout /t 20 /nobreak
