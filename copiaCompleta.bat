@@ -2,7 +2,7 @@
 @echo off
 
 :: Variables
-set containerId=72410bca8cce
+set containerId=b1c662fccb4d2327c8fd7576ef9b357a7c60783c1c3cb28d244167b2e99177b3 
 set user=balu
 set password=s2nd0b4lu
 set dbName=refugio_balu
@@ -13,14 +13,14 @@ set repositoryFolder=D:\School\BackupsBalu\backups
 docker start %containerId%
 
 :: Wait for the container to start
-timeout /t 120 /nobreak
+::timeout /t 120 /nobreak
 
 :: Get current datetime
 for /f "tokens=2 delims==" %%i in ('wmic OS Get localdatetime /value') do set fecha=%%i
 set fecha=%fecha:~0,4%-%fecha:~4,2%-%fecha:~6,2%_%fecha:~8,2%_%fecha:~10,2%
 
 :: Set filename for the dump
-set nombreArchivo= %repositoryFolder%\fullcopies\%dbName%_%fecha%.sql
+set nombreArchivo=%repositoryFolder%\fullcopies\backup_%fecha%.sql
 
 :: Dump the database and redirect stderr to stdout
 docker exec %containerId% mysqldump -u %user% -p%password% %dbName% > "%nombreArchivo%" 2>nul

@@ -2,19 +2,19 @@
 @echo off
 
 :: Variables
-set containerId=72410bca8cce 
+set containerId=b1c662fccb4d2327c8fd7576ef9b357a7c60783c1c3cb28d244167b2e99177b3
 set user=balu
 set password=s2nd0b4lu
 
 set dbName=refugio_balu
-set repositoryFolder= D:\School\BackupsBalu\backups
+set repositoryFolder=D:\School\BackupsBalu\backups
 :: donde busca
 set backupFolder=%repositoryFolder%\fullcopies
 
 :: Start the MySQL container
 docker start %containerId%
 :: Wait for the container to start
-timeout /t 120 /nobreak
+::timeout /t 120 /nobreak
 
 cd /d %repositoryFolder%
 
@@ -42,3 +42,5 @@ if defined newestBackup (
 ) else (
     echo No se encontraron archivos .sql en la carpeta especificada.
 )
+
+timeout /t 20 /nobreak
