@@ -11,6 +11,10 @@ set repositoryFolder=D:\School\BackupsBalu\backups
 :: donde busca
 set backupFolder=%repositoryFolder%\fullcopies
 
+set rarPath=D:\Work\
+set rarPassword=s3nd0b4lu
+set rarDestination=%repositoryFolder%\temp\
+
 :: Start the MySQL container
 docker start %containerId%
 :: Wait for the container to start
@@ -20,7 +24,7 @@ cd /d %repositoryFolder%
 
 git pull
 
-for /f "delims=" %%I in ('dir "%backupFolder%\*.sql" /b /a-d /o-d') do (
+for /f "delims=" %%I in ('dir "%backupFolder%\*.rar" /b /a-d /o-d') do (
     set "newestBackup=%%I"
     goto :breakLoop
 )
@@ -31,7 +35,13 @@ echo %newestBackup% > "%backupFolder%\latestBackup.txt"
 
 if defined newestBackup (
     echo Encontrado el archivo de backup más reciente: %newestBackup%
-    docker exec -i %containerId% mysql -u %user% -p%password% %dbName% < "%backupFolder%\%newestBackup%"
+
+    ::Extract the .sql file
+    %rarPath%UnRAR.exe x -p%rarPassword% %backupFolder%\%newestBackup% %rarDestination%
+
+
+    :: Restore the database, chose the .sql file with the same name as the .rar file (without extension)
+    docker exec -i %containerId% mysql -u %user% -p%password% %dbName% < "%rarDestination%\%newestBackup:.rar=.sql%"
     
     if errorlevel 1 (
         :: guardar el error en un archivo .txt
@@ -42,5 +52,7 @@ if defined newestBackup (
 ) else (
     echo No se encontraron archivos .sql en la carpeta especificada.
 )
+
+del %rarDestination%\%newestBackup:.rar=.sql%
 
 timeout /t 20 /nobreak
