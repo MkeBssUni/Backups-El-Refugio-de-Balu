@@ -9,6 +9,10 @@ set dbName=refugio_balu
 
 set repositoryFolder=D:\School\BackupsBalu\backups
 
+:: Get current datetime
+for /f "tokens=2 delims==" %%i in ('wmic OS Get localdatetime /value') do set fecha=%%i
+set fecha=%fecha:~0,4%-%fecha:~4,2%-%fecha:~6,2%_%fecha:~8,2%_%fecha:~10,2%
+
 set rarPath=D:\Work\
 set rarName=backup_%fecha%.rar
 set rarDestination=%repositoryFolder%\fullcopies\
@@ -20,17 +24,13 @@ docker start %containerId%
 :: Wait for the container to start
 ::timeout /t 120 /nobreak
 
-:: Get current datetime
-for /f "tokens=2 delims==" %%i in ('wmic OS Get localdatetime /value') do set fecha=%%i
-set fecha=%fecha:~0,4%-%fecha:~4,2%-%fecha:~6,2%_%fecha:~8,2%_%fecha:~10,2%
-
 :: Set filename for the dump
 set nombreArchivo=%repositoryFolder%\fullcopies\backup_%fecha%.sql
 
 :: Dump the database and redirect stderr to stdout
 docker exec %containerId% mysqldump -u %user% -p%password% %dbName% > "%nombreArchivo%" 2>nul
 
-%rarPath%Rar.exe a -r -ep1 -hp%rarPassword% %repositoryFolder%\fullcopies\backup_%fecha%.rar %nombreArchivo%
+%rarPath%Rar.exe a -r -ep1 -hp%rarPassword% %repositoryFolder%\fullcopies\%rarName% %nombreArchivo%
 
 :: Delete the dump
 del %nombreArchivo%
