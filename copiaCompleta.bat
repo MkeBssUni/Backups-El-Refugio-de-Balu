@@ -9,6 +9,11 @@ set dbName=refugio_balu
 
 set repositoryFolder=D:\School\BackupsBalu\backups
 
+set rarPath=D:\Work\
+set rarName=backup_%fecha%.rar
+set rarDestination=%repositoryFolder%\fullcopies\
+set rarPassword=s3nd0b4lu
+
 :: Start Docker container
 docker start %containerId%
 
@@ -25,6 +30,10 @@ set nombreArchivo=%repositoryFolder%\fullcopies\backup_%fecha%.sql
 :: Dump the database and redirect stderr to stdout
 docker exec %containerId% mysqldump -u %user% -p%password% %dbName% > "%nombreArchivo%" 2>nul
 
+%rarPath%Rar.exe a -r -ep1 -hp%rarPassword% %repositoryFolder%\fullcopies\backup_%fecha%.rar %nombreArchivo%
+
+:: Delete the dump
+del %nombreArchivo%
 
 :: Git operations
 cd /d %repositoryFolder%
