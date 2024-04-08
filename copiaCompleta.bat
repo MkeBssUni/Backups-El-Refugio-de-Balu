@@ -2,7 +2,7 @@
 @echo off
 
 :: Variables
-set containerId=b1c662fccb4d2327c8fd7576ef9b357a7c60783c1c3cb28d244167b2e99177b3 
+set containerId=d8451c4c6497
 set user=balu
 set password=s2nd0b4lu
 set dbName=refugio_balu
